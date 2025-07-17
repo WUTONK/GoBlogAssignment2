@@ -8,7 +8,7 @@
   "tags": [],
   "paths": {
     "/user/login": {
-      "get": {
+      "post": {
         "summary": "用户登陆接口",
         "deprecated": false,
         "description": "",
