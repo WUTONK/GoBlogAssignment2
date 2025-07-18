@@ -15,15 +15,22 @@
 
 import * as runtime from '../runtime';
 import type {
+  InfoResp,
   LoginReq,
   LoginResp,
 } from '../models/index';
 import {
+    InfoRespFromJSON,
+    InfoRespToJSON,
     LoginReqFromJSON,
     LoginReqToJSON,
     LoginRespFromJSON,
     LoginRespToJSON,
 } from '../models/index';
+
+export interface UserInfoGetRequest {
+    authorization?: string;
+}
 
 export interface UserLoginPostRequest {
     loginReq?: LoginReq;
@@ -33,6 +40,41 @@ export interface UserLoginPostRequest {
  * 
  */
 export class DefaultApi extends runtime.BaseAPI {
+
+    /**
+     * 
+     * 用户信息接口
+     */
+    async userInfoGetRaw(requestParameters: UserInfoGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<InfoResp>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters['authorization'] != null) {
+            headerParameters['Authorization'] = String(requestParameters['authorization']);
+        }
+
+
+        let urlPath = `/user/info`;
+
+        const response = await this.request({
+            path: urlPath,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => InfoRespFromJSON(jsonValue));
+    }
+
+    /**
+     * 
+     * 用户信息接口
+     */
+    async userInfoGet(requestParameters: UserInfoGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<InfoResp> {
+        const response = await this.userInfoGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      * 

@@ -39,6 +39,51 @@
         },
         "security": []
       }
+    },
+    "/user/info": {
+      "get": {
+        "summary": "用户信息接口",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/infoResp"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
     }
   },
   "components": {
@@ -68,6 +113,17 @@
         },
         "required": [
           "token"
+        ]
+      },
+      "infoResp": {
+        "type": "object",
+        "properties": {
+          "nike_name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "nike_name"
         ]
       }
     },

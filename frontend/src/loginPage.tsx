@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import './App.css'
+import './app.css'
 import { Api } from './shared'
 
-function App() {
+function LoginPage() {
   const [password, setPassword] = useState("")
   const [username, setUsername] = useState("")
   const [token, setToken] = useState("")
@@ -23,7 +23,7 @@ function App() {
         <input
             type="text"
             value={password}
-            placeholder="请输入用户名"
+            placeholder="请输入密码"
             onChange={(e) => setPassword(e.target.value)}
             className="password-input"
           />
@@ -41,6 +41,8 @@ function App() {
           }
         ).then((res)=>{
           setToken(res.token)
+          // 将 token 缓存到本地
+          localStorage.setItem("token",token)
           alert(token)
         }).catch((err) => {alert(err.message)})
       }}
@@ -50,4 +52,4 @@ function App() {
   )
 }
 
-export default App
+export default LoginPage
