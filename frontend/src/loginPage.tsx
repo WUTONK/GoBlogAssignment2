@@ -2,11 +2,12 @@ import { useState } from 'react'
 import './app.css'
 import { Button, Input, Space } from 'antd'
 import { Api } from './shared'
+import { useNavigate } from 'react-router-dom'
 
 function LoginPage() {
+  const navigate = useNavigate()
   const [password, setPassword] = useState("")
   const [username, setUsername] = useState("")
-  const [token, setToken] = useState("")
 
   return (
     <>
@@ -45,12 +46,14 @@ function LoginPage() {
             } 
           }
         ).then((res)=>{
-          setToken(res.token)
           // 将 token 缓存到本地 
           // 现在更改为直接使用res.token 避免了异步操作导致的旧token被错误的延迟缓存从而没有被覆盖的问题
           localStorage.setItem("token",res.token)
-          alert(res.token)
+          alert(res.token + "\n")
         }).catch((err) => {alert(err.message)})
+
+        // 路由跳转
+        navigate('/user/info')
       }}
       >
         登录
