@@ -30,7 +30,8 @@ func main() {
 
 	handler.InitGin(router)
 
-	log.Println("Server is running on port http://127.0.0.1:8080")
+	log.Println("Backend Server is running on port http://127.0.0.1:8080")
+	log.Println("Frontend login page is running on path http://localhost:5173/user/login")
 
 	// 服务器运行端口
 	router.Run("127.0.0.1:8080")
