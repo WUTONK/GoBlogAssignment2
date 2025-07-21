@@ -50,10 +50,9 @@ function LoginPage() {
           // 现在更改为直接使用res.token 避免了异步操作导致的旧token被错误的延迟缓存从而没有被覆盖的问题
           localStorage.setItem("token",res.token)
           alert(res.token + "\n")
+          // 路由跳转
+          navigate('/user/info')
         }).catch((err) => {alert(err.message)})
-
-        // 路由跳转
-        navigate('/user/info')
       }}
       >
         登录
