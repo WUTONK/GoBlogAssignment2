@@ -118,12 +118,12 @@
       "infoResp": {
         "type": "object",
         "properties": {
-          "nike_name": {
+          "nick_name": {
             "type": "string"
           }
         },
         "required": [
-          "nike_name"
+          "nick_name"
         ]
       }
     },

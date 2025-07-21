@@ -14,7 +14,7 @@ function InfoPage() {
       }
     }
   ).then(
-    (res) => setNickname(res.nikeName)
+    (res) => setNickname(res.nickName)
   ).catch((err) => alert(err.message))
   console.log("调用infofget结束")
 

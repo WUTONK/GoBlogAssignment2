@@ -24,14 +24,14 @@ export interface InfoResp {
      * @type {string}
      * @memberof InfoResp
      */
-    nikeName: string;
+    nickName: string;
 }
 
 /**
  * Check if a given object implements the InfoResp interface.
  */
 export function instanceOfInfoResp(value: object): value is InfoResp {
-    if (!('nikeName' in value) || value['nikeName'] === undefined) return false;
+    if (!('nickName' in value) || value['nickName'] === undefined) return false;
     return true;
 }
 
@@ -45,7 +45,7 @@ export function InfoRespFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     }
     return {
         
-        'nikeName': json['nike_name'],
+        'nickName': json['nick_name'],
     };
 }
 
@@ -60,7 +60,7 @@ export function InfoRespToJSONTyped(value?: InfoResp | null, ignoreDiscriminator
 
     return {
         
-        'nike_name': value['nikeName'],
+        'nick_name': value['nickName'],
     };
 }
 
