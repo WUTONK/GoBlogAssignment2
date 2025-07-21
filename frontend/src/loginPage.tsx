@@ -46,9 +46,10 @@ function LoginPage() {
           }
         ).then((res)=>{
           setToken(res.token)
-          // 将 token 缓存到本地
-          localStorage.setItem("token",token)
-          alert(token)
+          // 将 token 缓存到本地 
+          // 现在更改为直接使用res.token 避免了异步操作导致的旧token被错误的延迟缓存从而没有被覆盖的问题
+          localStorage.setItem("token",res.token)
+          alert(res.token)
         }).catch((err) => {alert(err.message)})
       }}
       >
