@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './app.css'
+import { Button, Input, Space } from 'antd'
 import { Api } from './shared'
 
 function LoginPage() {
@@ -10,25 +11,29 @@ function LoginPage() {
   return (
     <>
      <div className='app-container'>
+     <Space direction="vertical" size="large" style={{ innerHeight: '100%' }}>
+      <Space direction="vertical" size="small" style={{ innerHeight: '100%' }}>
       <div className='input-password'>
-        <input
+        <Input
           type="text"
           value={username}
           placeholder="请输入用户名"
-          onChange={(e) => setUsername(e.target.value)}
-          className="username-input"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
         />
       </div>
       <div>
-        <input
+        <Input
             type="text"
             value={password}
             placeholder="请输入密码"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
             className="password-input"
           />
       </div>
-      <button
+      </Space>
+      
+      {/* 登录按钮 */}
+      <Button
       className='login-button'
       title="登陆"
       onClick={()=>{
@@ -46,7 +51,10 @@ function LoginPage() {
           alert(token)
         }).catch((err) => {alert(err.message)})
       }}
-      />
+      >
+        登录
+      </Button>
+      </Space>
      </div>
     </>
   )
