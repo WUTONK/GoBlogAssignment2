@@ -11,5 +11,5 @@ package models
 
 type InfoResp struct {
 
-	NikeName string `json:"nike_name"`
+	NickName string `json:"nick_name"`
 }

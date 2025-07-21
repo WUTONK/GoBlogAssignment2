@@ -3,12 +3,17 @@ package main
 import (
 	"WutonkGinBlog/handler"
 	"log"
+	"os"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	if err := os.WriteFile("../tokenList/token.txt", []byte("tokenFile"), 0666); err != nil {
+		log.Fatal(err)
+	}
+
 	router := gin.Default()
 
 	router.Use(cors.New(cors.Config{

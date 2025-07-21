@@ -2,7 +2,7 @@ package handler
 
 import (
 	"WutonkGinBlog/models"
-	"crypto/md5"
+	"crypto/rand"
 	"encoding/base64"
 	"fmt"
 	"log"
@@ -41,11 +41,15 @@ func validUserAndPassword(incomingUsername, incomingPassword string) bool {
 	}
 }
 
-func makeToken(username string) string {
-	token := md5.New()
-	token.Write([]byte(username)) //写入并生成哈希
-	// token.Sum(nil) 获取最终的字节数组（哈希值）
-	return base64.URLEncoding.EncodeToString(token.Sum(nil))
+func makeToken() string {
+	// 随机生成 32 位哈希
+	// 从 md5 修改为使用 crypto/rand 生成token
+	// 因为发现了原本的token前后端不一致问题并非因为随机生成源不一致，而是因为在向api发送token时错误的再次使用了makeToken()
+	token := make([]byte, 32)
+	if _, err := rand.Read(token); err != nil {
+		return ""
+	}
+	return base64.URLEncoding.EncodeToString(token)
 }
 
 func Login(c *gin.Context) {
@@ -53,19 +57,22 @@ func Login(c *gin.Context) {
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err})
+		return
 	}
 
 	valid := validUserAndPassword(req.Username, req.Password)
 
 	if !valid {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "错误的用户名或密码"})
+		return
 	}
 
-	token := makeToken(req.Password)
+	token := makeToken()
 
 	c.JSON(http.StatusOK, models.LoginResp{
-		Token: makeToken(req.Password),
+		Token: token,
 	})
+	fmt.Printf("已发送token: %s\n", token)
 
 	// 写入token
 	if err := os.WriteFile("../tokenList/token.txt", []byte(token), 0666); err != nil {
@@ -92,7 +99,7 @@ func Info(c *gin.Context) {
 	fmt.Printf("token:%s\n", string(token))
 	if authorization == string(token) {
 		c.JSON(http.StatusOK, models.InfoResp{
-			NikeName: "nnnnnikename!",
+			NickName: "nickname!",
 		})
 	} else {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "传入token与本地token不一致"})
